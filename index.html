@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>そんたく / SONTAKU - 二郎大好き系VTuber</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-bg: #fffdf7;
+      --color-bg-secondary: #f7f1df;
+      --color-panel: #ffffff;
+      --color-ink: #171412;
+      --color-text-primary: #241b14;
+      --color-text-secondary: #6e6256;
+      --color-text-tertiary: #9b8c7c;
+      --color-border: #eadfcf;
+      --color-accent: #e42e27;
+      --color-accent-dark: #8d1f12;
+      --color-gold: #f7c948;
+      --color-green: #718d3e;
+      --color-night: #16130f;
+      --shadow-soft: 0 18px 60px rgba(54, 36, 18, .16);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      min-width: 320px;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--color-bg);
+      box-shadow: 0 0 0 1px rgba(234, 223, 207, .7);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 680px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 440px);
+      align-items: end;
+      gap: 2rem;
+      padding: 2rem 2.4rem 0;
+      background:
+        linear-gradient(180deg, rgba(255,253,247,.2) 0%, rgba(255,253,247,.86) 78%, var(--color-bg) 100%),
+        url("sontaku_assets/sontaku-ramen-night-bg.png") center / cover no-repeat;
+      isolation: isolate;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 72% 24%, rgba(247,201,72,.28), transparent 34%);
+      z-index: -1;
+    }
+    .hero-copy {
+      align-self: center;
+      padding: 2rem 0 4rem;
+      max-width: 560px;
+    }
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.88);
+      color: var(--color-accent-dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.2rem;
+      border: 1px solid rgba(141,31,18,.18);
+      box-shadow: 0 8px 24px rgba(36,27,20,.08);
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.45; transform:scale(.76)} }
+    .hero-logo {
+      width: min(560px, 100%);
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 18px 22px rgba(54,36,18,.2));
+    }
+    .hero-name { font-size: clamp(42px, 8vw, 84px); line-height: 1; font-weight: 800; letter-spacing: 0; }
+    .hero-ruby { font-size: 13px; color: var(--color-text-secondary); letter-spacing: .2em; margin: .55rem 0 1rem; }
+    .hero-catch { font-size: 17px; color: var(--color-text-primary); max-width: 430px; margin-bottom: 1.5rem; font-weight: 600; }
+    .sns-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .sns-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-night);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 11px 18px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(36,27,20,.18);
+      transition: transform .15s, opacity .15s;
+    }
+    .sns-btn.secondary { background: #ffffff; color: var(--color-ink); border-color: var(--color-border); }
+    .sns-btn:hover { transform: translateY(-2px); opacity: .9; }
+    .sns-btn i { font-size: 18px; }
+    .hero-visual {
+      position: relative;
+      min-height: 620px;
+      align-self: stretch;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .hero-character {
+      width: min(430px, 100%);
+      max-height: 620px;
+      object-fit: contain;
+      object-position: bottom center;
+      filter: drop-shadow(0 28px 36px rgba(23,20,18,.28));
+    }
+    .floating-chibi {
+      position: absolute;
+      left: -40px;
+      bottom: 2.2rem;
+      width: 130px;
+      padding: .5rem;
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      transform: rotate(-5deg);
+      box-shadow: var(--shadow-soft);
+    }
+
+    hr { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+    .section { padding: 4rem 2.4rem; }
+    .section.bg-secondary { background: var(--color-bg-secondary); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.6rem; }
+    .section-label { font-size: 11px; color: var(--color-accent-dark); text-transform: uppercase; letter-spacing: .16em; font-weight: 800; margin-bottom: .35rem; }
+    .section-title { font-size: clamp(24px, 4vw, 34px); line-height: 1.2; font-weight: 800; letter-spacing: 0; }
+    .section-copy { color: var(--color-text-secondary); font-size: 14px; max-width: 440px; }
+
+    .profile-layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 330px) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+    .profile-photo {
+      background: var(--color-panel);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      place-items: center;
+    }
+    .profile-photo img { max-height: 390px; object-fit: contain; }
+    .profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .profile-card {
+      background: var(--color-panel);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+    }
+    .profile-key { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; font-weight: 800; }
+    .profile-val { font-size: 14px; line-height: 1.7; }
+    .tag-wrap { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; }
+    .tag {
+      font-size: 12px;
+      background: #fff8de;
+      color: #594313;
+      border: 1px solid #f1d889;
+      border-radius: var(--radius-md);
+      padding: 4px 10px;
+      font-weight: 700;
+    }
+
+    .schedule-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .sched-item {
+      background: var(--color-panel);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 28px rgba(54,36,18,.08);
+    }
+    .sched-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; }
+    .sched-day { font-size: 18px; font-weight: 800; }
+    .sched-time { font-size: 13px; color: var(--color-accent-dark); font-weight: 800; }
+    .sched-title { font-size: 15px; font-weight: 800; }
+    .sched-type { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
+    .sched-badge {
+      align-self: flex-start;
+      font-size: 11px;
+      background: #eef4df;
+      color: var(--color-green);
+      border: 1px solid #d7e3b7;
+      padding: 4px 10px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
+      margin-top: 1rem;
+    }
+    .time-note { font-size: 13px; color: var(--color-text-secondary); margin-top: 14px; display: flex; align-items: center; gap: 6px; }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .visual-card {
+      background: var(--color-panel);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      min-height: 210px;
+      box-shadow: 0 10px 28px rgba(54,36,18,.08);
+    }
+    .visual-card.logo-card {
+      grid-row: span 2;
+      display: grid;
+      place-items: center;
+      padding: 1.25rem;
+      background: #fff;
+    }
+    .visual-card.figure-card {
+      display: grid;
+      place-items: end center;
+      padding: 1rem 1rem 0;
+      background: linear-gradient(180deg, #fff8de, #ffffff);
+    }
+    .visual-card.icon-card img { width: 100%; height: 100%; object-fit: cover; }
+    .visual-card.figure-card img { max-height: 300px; object-fit: contain; }
+
+    .community {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 180px;
+      align-items: center;
+      gap: 2rem;
+    }
+    .hashtag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem; }
+    .hashtag {
+      font-size: 14px;
+      color: var(--color-accent-dark);
+      background: #fff;
+      border: 1px solid #efc0b8;
+      padding: 7px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
+    }
+    .community-mascot { width: 180px; margin-left: auto; filter: drop-shadow(0 18px 20px rgba(54,36,18,.16)); }
+
+    .support-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 240px;
+      align-items: center;
+      gap: 2rem;
+      background: var(--color-night);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+    .support-card .section-label { color: var(--color-gold); }
+    .support-card .desc { color: rgba(255,255,255,.74); font-size: 14px; margin: .75rem 0 1.5rem; max-width: 520px; }
+    .support-art { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius-lg); padding: 1rem; }
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .15s, opacity .15s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); opacity: .9; }
+
+    .footer {
+      padding: 1.5rem 2.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #fff;
+    }
+    .footer-name { font-size: 15px; font-weight: 800; }
+    .footer-copy { font-size: 12px; color: var(--color-text-tertiary); }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 2rem 1.25rem 0; gap: 0; }
+      .hero-copy { padding: 1rem 0 1.5rem; }
+      .hero-visual { min-height: 420px; }
+      .hero-character { max-height: 420px; }
+      .floating-chibi { left: 0; bottom: 1rem; width: 105px; }
+      .section { padding: 3rem 1.25rem; }
+      .profile-layout, .community, .support-card { grid-template-columns: 1fr; }
+      .profile-grid, .schedule-list, .visual-grid { grid-template-columns: 1fr; }
+      .visual-card.logo-card { grid-row: auto; }
+      .community-mascot { margin: 0 auto; }
+      .support-card { padding: 1.5rem; }
+      .support-art { max-width: 260px; margin: 0 auto; }
+      .section-head { display: block; }
+      .section-copy { margin-top: .6rem; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-name { font-size: 42px; }
+      .sns-btn { width: 100%; justify-content: center; }
+      .sched-item { min-height: 150px; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="live-badge"><span class="live-dot"></span>月・水・金 25時から配信</div>
+        <img class="hero-logo" src="sontaku_assets/sontaku-logo.png" alt="そんたく ロゴ">
+        <h1 class="hero-name">そんたく</h1>
+        <p class="hero-ruby">SONTAKU</p>
+        <p class="hero-catch">二郎大好き系VTuber。深夜25時、ラーメンとゲームと雑談で夜ふかし勢をあたためます。</p>
+        <div class="sns-row">
+          <a class="sns-btn" href="https://youtube.com/channel/UCrEepKFSxaRSJ2VC7aooW3g/" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i>YouTube</a>
+          <a class="sns-btn secondary" href="https://x.com/5ontaku" target="_blank" rel="noopener"><i class="ti ti-brand-x"></i>@5ontaku</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="そんたくのキャラクターアート">
+        <img class="hero-character" src="sontaku_assets/sontaku-portrait.png" alt="そんたく 立ち絵">
+        <img class="floating-chibi" src="sontaku_assets/sontaku-chibi.png" alt="ラーメンを持ったそんたくのミニキャラ">
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Profile</p>
+          <h2 class="section-title">プロフィール</h2>
+        </div>
+        <p class="section-copy">金髪にグリーンの差し色、黒衣装とラーメン愛が目印。深夜の一杯みたいに、ふっと戻ってきたくなる配信へ。</p>
+      </div>
+      <div class="profile-layout">
+        <div class="profile-photo"><img src="sontaku_assets/sontaku-portrait-sketch.png" alt="そんたく 表情イラスト"></div>
+        <div class="profile-grid">
+          <div class="profile-card"><p class="profile-key">キャッチフレーズ</p><p class="profile-val">二郎大好き系VTuber。深夜に現れ、ラーメンと配信への愛を語る。</p></div>
+          <div class="profile-card"><p class="profile-key">配信時間</p><p class="profile-val">月・水・金 深夜25時から。夜ふかし勢と一緒に盛り上がろう。</p></div>
+          <div class="profile-card"><p class="profile-key">好きなもの</p><div class="tag-wrap"><span class="tag">二郎系ラーメン</span><span class="tag">ゲーム</span><span class="tag">深夜雑談</span></div></div>
+          <div class="profile-card"><p class="profile-key">ビジュアル</p><div class="tag-wrap"><span class="tag">金髪</span><span class="tag">グリーンメッシュ</span><span class="tag">黒コーデ</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="section bg-secondary">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Schedule</p>
+          <h2 class="section-title">配信スケジュール</h2>
+        </div>
+        <p class="section-copy">定期枠は月・水・金。25時は翌日午前1時なので、寝る前にも、まだ寝ない夜にも。</p>
+      </div>
+      <div class="schedule-list">
+        <div class="sched-item"><div><div class="sched-top"><span class="sched-day">月曜日</span><span class="sched-time">25:00</span></div><p class="sched-title">週はじめ深夜配信</p><p class="sched-type">ゲーム実況 / 雑談</p></div><span class="sched-badge">毎週</span></div>
+        <div class="sched-item"><div><div class="sched-top"><span class="sched-day">水曜日</span><span class="sched-time">25:00</span></div><p class="sched-title">水曜深夜配信</p><p class="sched-type">ゲーム実況 / 雑談</p></div><span class="sched-badge">毎週</span></div>
+        <div class="sched-item"><div><div class="sched-top"><span class="sched-day">金曜日</span><span class="sched-time">25:00</span></div><p class="sched-title">週末前夜配信</p><p class="sched-type">ゲーム実況 / 雑談</p></div><span class="sched-badge">毎週</span></div>
+      </div>
+      <p class="time-note"><i class="ti ti-clock"></i>25時 = 翌日午前1時。配信予定はYouTubeとXでチェック！</p>
+    </section>
+
+    <hr>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Visuals</p>
+          <h2 class="section-title">そんたくのビジュアル</h2>
+        </div>
+        <p class="section-copy">ロゴ、アイコン、ミニキャラ、立ち絵をまとめて配置。ページ全体にラーメンと金色の印象を重ねています。</p>
+      </div>
+      <div class="visual-grid">
+        <div class="visual-card logo-card"><img src="sontaku_assets/sontaku-logo.png" alt="そんたく ロゴ"></div>
+        <div class="visual-card icon-card"><img src="sontaku_assets/sontaku-icon.jpg" alt="そんたく アイコン"></div>
+        <div class="visual-card figure-card"><img src="sontaku_assets/sontaku-chibi.png" alt="ラーメンを持ったそんたく"></div>
+        <div class="visual-card figure-card"><img src="sontaku_assets/sontaku-portrait.png" alt="そんたく 立ち絵"></div>
+        <div class="visual-card icon-card"><img src="sontaku_assets/sontaku-ramen-night-bg.png" alt="深夜ラーメン配信の背景装飾"></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="section bg-secondary">
+      <div class="community">
+        <div>
+          <p class="section-label">Community</p>
+          <h2 class="section-title">配信を一緒に盛り上げよう</h2>
+          <p class="section-copy">ファンアート、感想、切り抜きはタグで投稿。深夜のテンションも、翌朝の感想も歓迎です。</p>
+          <div class="hashtag-row"><span class="hashtag">#そんたく配信</span><span class="hashtag">#そんたくアート</span><span class="hashtag">#そんたく切り抜き</span></div>
+        </div>
+        <img class="community-mascot" src="sontaku_assets/sontaku-chibi.png" alt="そんたく ミニキャラ">
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="section">
+      <div class="support-card">
+        <div>
+          <p class="section-label">Support</p>
+          <h2 class="section-title">そんたくを応援する</h2>
+          <p class="desc">深夜25時から始まる配信をお見逃しなく。チャンネル登録、高評価、ベル通知で次の一杯を一緒に待とう。</p>
+          <a href="https://youtube.com/channel/UCrEepKFSxaRSJ2VC7aooW3g/" target="_blank" rel="noopener" class="btn-primary"><i class="ti ti-brand-youtube"></i>チャンネル登録はこちら</a>
+        </div>
+        <div class="support-art"><img src="sontaku_assets/sontaku-icon.jpg" alt="そんたく アイコン"></div>
+      </div>
+    </section>
+
+    <hr>
+
+    <footer class="footer">
+      <span class="footer-name">そんたく / SONTAKU</span>
+      <span class="footer-copy">© 2026 そんたく All rights reserved.</span>
+    </footer>
+  </main>
+</body>
+</html>
